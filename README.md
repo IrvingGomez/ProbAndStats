@@ -12,6 +12,5 @@ This repository collects notebooks and notes for exploring probability and stati
 ## Suggested learning path
 
 1. Read through `ProbAndStatistics.pdf` to familiarize yourself with the concepts discussed in the course.
-2. Run `00_Preprocessing.ipynb` to generate the processed dataset (ensure you have the required CSV files).
-3. Open `GradioStatistics.ipynb` to explore the data interactively with Gradio and matplotlib.
+2. Open `GradioStatistics.ipynb` to explore the data interactively with Gradio and matplotlib.
 
