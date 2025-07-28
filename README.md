@@ -1,4 +1,4 @@
-# ProbAndStats_CMKL
+# ProbAndStats
 
 This repository collects notebooks and notes for exploring probability and statistics.
 
