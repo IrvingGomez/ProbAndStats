@@ -2499,7 +2499,57 @@ def mirror_plot(numeric_col, group1, name_group1, group2, name_group2, df_output
 # In[43]:
 
 
-def two_sample_ttest(numeric_col, alternative, cat_col1, cat_vals1, name_group1, cat_col2, cat_vals2, name_group2, correction):
+def plot_mean_distribution(group1, name_group1, group2, name_group2, bootstrap_samples, df_output):
+        # Extract test results from df_output
+        t_val = df_output["T"].values[0]
+        p_val = df_output["p-val"].values[0]
+
+        # Means
+        mean1 = np.mean(group1)
+        mean2 = np.mean(group2)
+
+        # Bootstrap variances
+        boot1 = [np.mean(np.random.choice(group1, size=len(group1), replace=True)) for _ in range(bootstrap_samples)]
+        boot2 = [np.mean(np.random.choice(group2, size=len(group2), replace=True)) for _ in range(bootstrap_samples)]
+
+        # Plot
+        fig, ax = plt.subplots(figsize=(8, 5))
+        sns.kdeplot(boot1, label=f"{name_group1} mean", fill=True, color="rebeccapurple", alpha=0.6, ax=ax)
+        sns.kdeplot(boot2, label=f"{name_group2} mean", fill=True, color="tab:orange", alpha=0.6, ax=ax)
+
+        ax.axvline(mean1, color="rebeccapurple", linestyle="--", linewidth=2)
+        ax.axvline(mean2, color="tab:orange", linestyle="--", linewidth=2)
+
+        ax.set_title(f"Bootstrap Mean Distributions", fontsize=14)
+        ax.set_xlabel("Mean", fontsize=12)
+        ax.set_ylabel("Density", fontsize=12)
+        ax.grid(True, linestyle="--", alpha=0.5)
+
+        # Annotate test result
+        ax.text(0.98, 0.95,
+                f"p = {round(p_val, 3)}\n"
+                f"Mean({name_group1}) = {round(mean1, 2)}\n"
+                f"Mean({name_group2}) = {round(mean2, 2)}",
+                transform=ax.transAxes,
+                ha="right", va="top",
+                bbox=dict(boxstyle="round", facecolor="white", alpha=0.7),
+                fontsize=11)
+
+        ax.legend()
+        plt.tight_layout()
+
+        return fig
+
+
+# In[44]:
+
+
+def two_sample_ttest(
+        numeric_col, alternative,
+        cat_col1, cat_vals1, name_group1,
+        cat_col2, cat_vals2, name_group2,
+        graph_check, plot_type, bootstrap_samples,
+        correction):
 
     df, data, stats, error_df, error_plot = prepare_data(numeric_col)
     if error_df:
@@ -2534,13 +2584,33 @@ def two_sample_ttest(numeric_col, alternative, cat_col1, cat_vals1, name_group1,
         df_output = pg.ttest(group1, group2, alternative=alternative, paired=False, correction=correction).round(ROUND)
 
         # --- Plot ---
-        fig = mirror_plot(numeric_col, group1, name_group1, group2, name_group2, df_output)
+        if graph_check:
+            if plot_type == "Sample Histogram":
+                fig = mirror_plot(numeric_col, group1, name_group1, group2, name_group2, df_output)
+            elif plot_type == "Mean Density":
+                fig = plot_mean_distribution(group1, name_group1, group2, name_group2, bootstrap_samples, df_output)
 
-        export_cache["table"] = df_output
-        export_cache["figure"] = fig
+            return [
+                gr.update(visible=True),
+                gr.update(visible=True),
+                df_output,
+                gr.update(visible=True),
+                gr.update(visible=True),
+                fig
+            ]
+        
+        else:
+            export_cache["table"] = df_output
+            export_cache["figure"] = None
 
-        # output_table_row, output_table, output_table, output_plot_row, output_plot, output_plot
-        return gr.update(visible=True), gr.update(visible=True), df_output, gr.update(visible=True), gr.update(visible=True), fig
+            return [
+                gr.update(visible=True),
+                gr.update(visible=True),
+                df_output,
+                gr.update(visible=False),
+                gr.update(visible=False),
+                None
+            ]
 
     except Exception as e:
         return [
@@ -2553,7 +2623,7 @@ def two_sample_ttest(numeric_col, alternative, cat_col1, cat_vals1, name_group1,
         ]
 
 
-# In[44]:
+# In[45]:
 
 
 def plot_variance_distribution(p, group1, name_group1, var1, group2, name_group2, var2, method, bootstrap_samples):
@@ -2593,7 +2663,7 @@ def plot_variance_distribution(p, group1, name_group1, var1, group2, name_group2
         return fig
 
 
-# In[45]:
+# In[46]:
 
 
 def variance_test(numeric_col, cat_col1, cat_vals1, name_group1,
@@ -2702,7 +2772,7 @@ def variance_test(numeric_col, cat_col1, cat_vals1, name_group1,
         ]
 
 
-# In[46]:
+# In[47]:
 
 
 def one_way_anova_plot(data_group, numeric_col, cat_col, df_output):
@@ -2760,7 +2830,7 @@ def one_way_anova_plot(data_group, numeric_col, cat_col, df_output):
     return fig
 
 
-# In[47]:
+# In[48]:
 
 
 def one_way_anova(numeric_col, cat_col, cat_vals):
@@ -2809,7 +2879,7 @@ def one_way_anova(numeric_col, cat_col, cat_vals):
 
 # # 🎮 🧪 Logic control of Hypothesis Testing
 
-# In[48]:
+# In[49]:
 
 
 def refresh_categorical_columns():
@@ -2828,7 +2898,7 @@ def refresh_categorical_columns():
     ]
 
 
-# In[49]:
+# In[50]:
 
 
 def update_category_options(col):
@@ -2850,7 +2920,7 @@ def update_group_name(cat_vals, default_label):
     return gr.update(value=default_label)
 
 
-# In[50]:
+# In[51]:
 
 
 def toggle_hypo_test(sel):
@@ -2870,7 +2940,7 @@ def toggle_hypo_test(sel):
         return [
             gr.update(visible=False),
             gr.update(visible=False),
-            gr.update(visible=True),  
+            gr.update(visible=True), 
             gr.update(visible=False), 
             gr.update(visible=True), 
             gr.update(visible=True), 
@@ -2882,7 +2952,7 @@ def toggle_hypo_test(sel):
         return [
             gr.update(visible=False),
             gr.update(visible=True),
-            gr.update(visible=False),  
+            gr.update(visible=True), 
             gr.update(visible=True), 
             gr.update(visible=False), 
             gr.update(visible=True), 
@@ -2894,7 +2964,7 @@ def toggle_hypo_test(sel):
         return [
             gr.update(visible=False),
             gr.update(visible=False),
-            gr.update(visible=False),  
+            gr.update(visible=False),
             gr.update(visible=False), 
             gr.update(visible=False), 
             gr.update(visible=True), 
@@ -2904,7 +2974,17 @@ def toggle_hypo_test(sel):
         ]
 
 
-# In[51]:
+# In[52]:
+
+
+def toggle_ttest_plot_type(check, sel1):
+    if check and sel1 == "Two samples Student's t-test":
+        return gr.update(visible=True)
+    else:
+        return gr.update(visible=False)
+
+
+# In[53]:
 
 
 def run_hypothesis_testing(
@@ -2916,14 +2996,14 @@ def run_hypothesis_testing(
         cat_col1, cat_vals1, name_group1,
         cat_col2, cat_vals2, name_group2,
         cat_col3, cat_vals3,
-        correction,
+        plot_type, correction,
         test_type
     ):
 
     if hypo_test == "One sample Student's t-test":
         return one_sample_ttest(numeric_col, mu0_text, alternative, graph_check, bootstrap_samples)
     elif hypo_test == "Two samples Student's t-test":
-        return two_sample_ttest(numeric_col, alternative, cat_col1, cat_vals1, name_group1, cat_col2, cat_vals2, name_group2, correction)
+        return two_sample_ttest(numeric_col, alternative, cat_col1, cat_vals1, name_group1, cat_col2, cat_vals2, name_group2, graph_check, plot_type, bootstrap_samples, correction)
     elif hypo_test == "Equal variance between two groups":
         return variance_test(numeric_col, cat_col1, cat_vals1, name_group1, cat_col2, cat_vals2, name_group2, test_type, graph_check, bootstrap_samples)
     elif hypo_test == "One-way ANOVA":
@@ -2932,7 +3012,7 @@ def run_hypothesis_testing(
 
 # # 🖥️ 🧪 GUI of Hypothesis Testing
 
-# In[52]:
+# In[54]:
 
 
 def build_hypothesis_tab():
@@ -2961,6 +3041,7 @@ def build_hypothesis_tab():
 
     with gr.Row() as ttest_graph_option:
         ttest_graph_check = gr.Checkbox(label="Include graph", value=True, interactive=True)
+        ttest_plot_type = gr.Dropdown(label="Select Graph", choices=["Sample Histogram", "Mean Density"], value="Mean Density", visible=False)
         ttest_boots_sample = gr.Slider(minimum=100, maximum=5000, value=1000, step=100, label="Bootstrap Samples")
 
     with gr.Group(visible=False) as category_group:
@@ -2992,6 +3073,12 @@ def build_hypothesis_tab():
         inputs=[hypo_test_dropdown],
         outputs=[mu0_input, alternative, ttest_graph_option, ttest_correction_check, equal_var_dropdown, category_group, group1, group2, group_anova]
     )
+    
+    hypo_test_dropdown.change(
+        fn=toggle_ttest_plot_type,
+        inputs=[ttest_graph_check, hypo_test_dropdown],
+        outputs=[ttest_plot_type]
+    )    
 
     refresh_columns_button.click(
         fn=load_numeric_cols,
@@ -3003,6 +3090,12 @@ def build_hypothesis_tab():
         fn=lambda check: gr.update(visible=check),
         inputs=[ttest_graph_check],
         outputs=[ttest_boots_sample],
+    )
+
+    ttest_graph_check.change(
+        fn=toggle_ttest_plot_type,
+        inputs=[ttest_graph_check, hypo_test_dropdown],
+        outputs=[ttest_plot_type]
     )
 
     refresh_categorical_button.click(
@@ -3059,7 +3152,7 @@ def build_hypothesis_tab():
             cat_column_dropdown_1, cat_values_dropdown_1, name_group1,
             cat_column_dropdown_2, cat_values_dropdown_2, name_group2,
             cat_column_dropdown_3, cat_values_dropdown_3,
-            ttest_correction_check,
+            ttest_plot_type, ttest_correction_check,
             equal_var_dropdown
         ],
         outputs=[output_table_row, output_table, output_table, output_plot_row, output_plot, output_plot]
@@ -3068,7 +3161,7 @@ def build_hypothesis_tab():
 
 # # 🧠 📈 Brain of Linear Regression
 
-# In[53]:
+# In[55]:
 
 
 def PlotSimpleRegression(data, x, y, intercept, formula_check, formula_latex, model, alpha, show_ci, show_pi, fit_to_obs, x_vect):
@@ -3095,7 +3188,7 @@ def PlotSimpleRegression(data, x, y, intercept, formula_check, formula_latex, mo
     # Scatter plot of data
     sns.scatterplot(data=data, x=x, y=y, ax=ax,
                     s=50, edgecolor="black", linewidth=0.5,
-                    zorder=3, label="Data")
+                    zorder=3, label="Data", alpha=0.5)
 
     # Regression line
     ax.plot(x_plot, pred_table["mean"], color="royalblue", linewidth=2, label="Prediction")
@@ -3157,7 +3250,7 @@ def PlotSimpleRegression(data, x, y, intercept, formula_check, formula_latex, mo
     return fig
 
 
-# In[54]:
+# In[56]:
 
 
 def PlotCompareYHatY(data, y, model, alpha):
@@ -3233,7 +3326,7 @@ def PlotCompareYHatY(data, y, model, alpha):
     return fig
 
 
-# In[55]:
+# In[57]:
 
 
 def PlotCompareYHatY(data, y, model, alpha=0.05):
@@ -3307,7 +3400,7 @@ def PlotCompareYHatY(data, y, model, alpha=0.05):
     return fig
 
 
-# In[56]:
+# In[58]:
 
 
 def linear_regression(
@@ -3426,7 +3519,7 @@ def linear_regression(
 
 # # 🎮 📈 Logic control of Linear Regression
 
-# In[57]:
+# In[59]:
 
 
 def update_graph_choices(independent_vars):
@@ -3436,7 +3529,7 @@ def update_graph_choices(independent_vars):
         return gr.update(choices=["Observed vs Predicted"], value="Observed vs Predicted")
 
 
-# In[58]:
+# In[60]:
 
 
 def toggle_graph_reg(sel, fit_to_obs):
@@ -3456,7 +3549,7 @@ def toggle_graph_reg(sel, fit_to_obs):
 
 # # 🖥️ 📈 GUI of Linear Regression
 
-# In[59]:
+# In[61]:
 
 
 def build_regression_tab():
@@ -3550,7 +3643,7 @@ def build_regression_tab():
 
 # # 🖥️ GUI
 
-# In[60]:
+# In[62]:
 
 
 css = """
@@ -3595,7 +3688,7 @@ css = """
 """
 
 
-# In[61]:
+# In[63]:
 
 
 with gr.Blocks(theme=gr.themes.Soft(), css=css) as demo:
@@ -3628,7 +3721,7 @@ with gr.Blocks(theme=gr.themes.Soft(), css=css) as demo:
     gr.Markdown("### 🤓 Created by Irving Gómez Méndez, version 4.1.1, June 2025.")
 
 
-# In[62]:
+# In[64]:
 
 
 demo.launch()
