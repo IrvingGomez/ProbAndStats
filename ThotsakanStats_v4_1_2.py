@@ -3692,6 +3692,29 @@ css = """
 
 
 with gr.Blocks(theme=gr.themes.Soft(), css=css) as demo:
+
+    with gr.Row():
+        with gr.Column():
+            gr.Markdown("### <div style='text-align: center;'>Himmapan Lab</div>")
+            gr.Image(
+                "HimmapanLab.png",
+                width=50,
+                interactive=False,
+                show_label=False,
+                show_download_button=False,
+                show_fullscreen_button=False
+                )
+        with gr.Column():
+            gr.Markdown("### <div style='text-align: center;'>Thotsakan Statistics</div>")
+            gr.Image(
+                "ThotsakanStats.png",
+                width=50,
+                interactive=False,
+                show_label=False,
+                show_download_button=False,
+                show_fullscreen_button=False
+                )
+
     with gr.Tabs():
         with gr.TabItem("🗄️ Data"):
             build_data_tab()
@@ -3718,7 +3741,7 @@ with gr.Blocks(theme=gr.themes.Soft(), css=css) as demo:
         #with gr.TabItem("🅱️ Bayesian Statistics"):
         #    gr.Markdown("# 🚧 Upcoming")
 
-    gr.Markdown("### 🤓 Created by Irving Gómez Méndez, version 4.1.1, June 2025.")
+    gr.Markdown("### 🤓 Created by Irving Gómez Méndez, version 4.1.2, June 2025.")
 
 
 # In[64]:
