@@ -5,8 +5,10 @@
 
 
 import os
+import re # <-- ADDED IMPORT
 import numpy as np
 import pandas as pd
+import tempfile
 
 # To plot
 import seaborn as sns
@@ -620,35 +622,63 @@ class Statistics():
 # In[4]:
 
 
-def save_table_as_csv(filename):
+# --- MODIFIED BLOCK ---
+def download_table_as_csv(filename):
+    """
+    Creates a temporary CSV file from the cached DataFrame and returns its path for download.
+    Accepts a user-provided filename.
+    """
     df = export_cache.get("table")
     if df is None:
-        return "❌ Error: No table available to save."
+        gr.Warning("❌ Error: No table available to download.")
+        return None
     
-    if not filename.strip():
-        return "❌ Error: Filename is empty."
+    # Sanitize and set a default filename
+    if not filename or not filename.strip():
+        base_filename = "statistical_summary"
+    else:
+        # Remove characters that are invalid in filenames
+        base_filename = re.sub(r'[\\/*?:"<>|]', "", filename)
+        base_filename = base_filename.strip()
+        if not base_filename: # If sanitization results in an empty string
+            base_filename = "statistical_summary"
 
     try:
-        filepath = os.path.abspath(f"{filename.strip()}.csv")
-        df.to_csv(filepath, index=False)
-        return "✅ Table saved successfully."
+        # Use a temporary directory which Gradio will manage
+        with tempfile.NamedTemporaryFile(delete=False, mode='w+', prefix=base_filename, suffix='.csv', encoding='utf-8') as tmpfile:
+            df.to_csv(tmpfile.name, index=False)
+            return tmpfile.name
     except Exception as e:
-        return f"❌ Error: {e}"
+        gr.Error(f"❌ Error creating CSV file: {e}")
+        return None
     
-def save_figure_as_image(filename):
+def download_figure_as_image(filename):
+    """
+    Creates a temporary PNG file from the cached figure and returns its path for download.
+    Accepts a user-provided filename.
+    """
     fig = export_cache.get("figure")
     if fig is None:
-        return "❌ Error: No figure available to save."
-    
-    if not filename.strip():
-        return "❌ Error: Filename is empty."
+        gr.Warning("❌ Error: No figure available to download.")
+        return None
+
+    # Sanitize and set a default filename
+    if not filename or not filename.strip():
+        base_filename = "output_figure"
+    else:
+        # Remove characters that are invalid in filenames
+        base_filename = re.sub(r'[\\/*?:"<>|]', "", filename)
+        base_filename = base_filename.strip()
+        if not base_filename: # If sanitization results in an empty string
+            base_filename = "output_figure"
 
     try:
-        filepath = os.path.abspath(f"{filename.strip()}.png")
-        fig.savefig(filepath, bbox_inches='tight')
-        return "✅ Image saved successfully."
+        with tempfile.NamedTemporaryFile(delete=False, prefix=base_filename, suffix='.png') as tmpfile:
+            fig.savefig(tmpfile.name, bbox_inches='tight')
+            return tmpfile.name
     except Exception as e:
-        return f"❌ Error: {e}"
+        gr.Error(f"❌ Error creating image file: {e}")
+        return None
 
 
 # In[5]:
@@ -802,33 +832,34 @@ def toggle_add_normal(check, sel_mu, sel_sigma):
 # In[11]:
 
 
+# --- MODIFIED BLOCK ---
 def build_results_block():        
     gr.Markdown("# 🎯 Results")
 
     with gr.Row(visible=False, elem_id="row_centered") as output_table_group:
-        save_table_button = gr.Button("💾 Save Table as CSV")
         name_save_table = gr.Textbox(label="Filename (without extension)", placeholder="e.g. descriptive_stats")
-        table_save_status = gr.Textbox(label="Table Save Status", interactive=False)
+        download_table_button = gr.Button("💾 Download Table as CSV")
+        file_output_table = gr.File(label="Download link will appear here", interactive=False)
 
     output_table = gr.Dataframe(visible=False)
 
     with gr.Row(visible=False, elem_id="row_centered") as output_plot_group:
-        save_figure_button = gr.Button("🖼️ Save Figure as PNG")
         name_save_figure = gr.Textbox(label="Filename (without extension)", placeholder="e.g. histogram")
-        img_save_status = gr.Textbox(label="Image Save Status", interactive=False)
+        download_figure_button = gr.Button("🖼️ Download Figure as PNG")
+        file_output_figure = gr.File(label="Download link will appear here", interactive=False)
 
     output_plot = gr.Plot(visible=False)
 
-    save_table_button.click(
-        fn=save_table_as_csv,
+    download_table_button.click(
+        fn=download_table_as_csv,
         inputs=[name_save_table],
-        outputs=[table_save_status]
+        outputs=[file_output_table]
     )
 
-    save_figure_button.click(
-        fn=save_figure_as_image,
+    download_figure_button.click(
+        fn=download_figure_as_image,
         inputs=[name_save_figure],
-        outputs=[img_save_status]
+        outputs=[file_output_figure]
     )
 
     return output_table_group, output_table, output_plot_group, output_plot
@@ -837,33 +868,34 @@ def build_results_block():
 # In[12]:
 
 
+# --- MODIFIED BLOCK ---
 def build_results_block_2():       
     gr.Markdown("# 🎯 Results")
     
     with gr.Row(visible=False, elem_id="row_centered") as output_table_group:
-        save_table_button = gr.Button("💾 Save Coefficient Table as CSV")
-        name_save_table = gr.Textbox(label="Filename (without extension)", placeholder="e.g. descriptive_stats")
-        table_save_status = gr.Textbox(label="Table Save Status", interactive=False)
+        name_save_table = gr.Textbox(label="Filename (without extension)", placeholder="e.g. regression_coeffs")
+        download_table_button = gr.Button("💾 Download Coefficient Table as CSV")
+        file_output_table = gr.File(label="Download link will appear here", interactive=False)
 
     output_table = gr.HTML(visible=False)
 
     with gr.Row(visible=False, elem_id="row_centered") as output_plot_group:
-        save_figure_button = gr.Button("🖼️ Save Figure as PNG")
-        name_save_figure = gr.Textbox(label="Filename (without extension)", placeholder="e.g. histogram")
-        img_save_status = gr.Textbox(label="Image Save Status", interactive=False)
+        name_save_figure = gr.Textbox(label="Filename (without extension)", placeholder="e.g. regression_plot")
+        download_figure_button = gr.Button("🖼️ Download Figure as PNG")
+        file_output_figure = gr.File(label="Download link will appear here", interactive=False)
 
     output_plot = gr.Plot(visible=False)
 
-    save_table_button.click(
-        fn=save_table_as_csv,
+    download_table_button.click(
+        fn=download_table_as_csv,
         inputs=[name_save_table],
-        outputs=[table_save_status]
+        outputs=[file_output_table]
     )
 
-    save_figure_button.click(
-        fn=save_figure_as_image,
+    download_figure_button.click(
+        fn=download_figure_as_image,
         inputs=[name_save_figure],
-        outputs=[img_save_status]
+        outputs=[file_output_figure]
     )
 
     return output_table_group, output_table, output_plot_group, output_plot
@@ -3695,25 +3727,26 @@ with gr.Blocks(theme=gr.themes.Soft(), css=css) as demo:
 
     with gr.Row():
         with gr.Column():
-            gr.Markdown("### <div style='text-align: center;'>Himmapan Lab</div>")
+            gr.Markdown("### <div style='text-align: center;'>Thotsakan Statistics</div>")
             gr.Image(
-                "HimmapanLab.png",
-                width=50,
+                "ThotsakanStats.png",
+                width=33,
                 interactive=False,
                 show_label=False,
                 show_download_button=False,
                 show_fullscreen_button=False
                 )
         with gr.Column():
-            gr.Markdown("### <div style='text-align: center;'>Thotsakan Statistics</div>")
+            gr.Markdown("### <div style='text-align: center;'>Himmapan Lab</div>")
             gr.Image(
-                "ThotsakanStats.png",
-                width=50,
+                "HimmapanLab.png",
+                width=33,
                 interactive=False,
                 show_label=False,
                 show_download_button=False,
                 show_fullscreen_button=False
                 )
+
 
     with gr.Tabs():
         with gr.TabItem("🗄️ Data"):
@@ -3741,11 +3774,32 @@ with gr.Blocks(theme=gr.themes.Soft(), css=css) as demo:
         #with gr.TabItem("🅱️ Bayesian Statistics"):
         #    gr.Markdown("# 🚧 Upcoming")
 
-    gr.Markdown("### 🤓 Created by Irving Gómez Méndez, version 4.1.2, June 2025.")
+    gr.Markdown("### 🤓 Developed by Himmapan Lab at CMKL University, version 4.2.0, June 2025.")
+
+    with gr.Row():
+        with gr.Column():
+            gr.Markdown("### <div style='text-align: center;'>CMKL University</div>")
+            gr.Image(
+                "CmklLogo.png",
+                width=33,
+                interactive=False,
+                show_label=False,
+                show_download_button=False,
+                show_fullscreen_button=False
+                )
+        with gr.Column():
+            gr.Markdown("### <div style='text-align: center;'>AICE</div>")
+            gr.Image(
+                "AiceLogo.png",
+                width=33,
+                interactive=False,
+                show_label=False,
+                show_download_button=False,
+                show_fullscreen_button=False
+                )
 
 
 # In[64]:
 
 
 demo.launch()
-
