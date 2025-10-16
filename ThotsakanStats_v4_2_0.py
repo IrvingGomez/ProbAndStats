@@ -3729,7 +3729,7 @@ with gr.Blocks(theme=gr.themes.Soft(), css=css) as demo:
         with gr.Column():
             gr.Markdown("### <div style='text-align: center;'>Thotsakan Statistics</div>")
             gr.Image(
-                "ThotsakanStats.png",
+                "Images/ThotsakanStats.png",
                 width=33,
                 interactive=False,
                 show_label=False,
@@ -3739,7 +3739,7 @@ with gr.Blocks(theme=gr.themes.Soft(), css=css) as demo:
         with gr.Column():
             gr.Markdown("### <div style='text-align: center;'>Himmapan Lab</div>")
             gr.Image(
-                "HimmapanLab.png",
+                "Images/HimmapanLab.png",
                 width=33,
                 interactive=False,
                 show_label=False,
@@ -3774,13 +3774,13 @@ with gr.Blocks(theme=gr.themes.Soft(), css=css) as demo:
         #with gr.TabItem("🅱️ Bayesian Statistics"):
         #    gr.Markdown("# 🚧 Upcoming")
 
-    gr.Markdown("### 🤓 Developed by Himmapan Lab at CMKL University, version 4.2.0, June 2025.")
+    gr.Markdown("### 🤓 Developed by Himmapan Lab at CMKL University, version 4.2.0, October 2025.")
 
     with gr.Row():
         with gr.Column():
             gr.Markdown("### <div style='text-align: center;'>CMKL University</div>")
             gr.Image(
-                "CmklLogo.png",
+                "Images/CmklLogo.png",
                 width=33,
                 interactive=False,
                 show_label=False,
@@ -3790,7 +3790,7 @@ with gr.Blocks(theme=gr.themes.Soft(), css=css) as demo:
         with gr.Column():
             gr.Markdown("### <div style='text-align: center;'>AICE</div>")
             gr.Image(
-                "AiceLogo.png",
+                "Images/AiceLogo.png",
                 width=33,
                 interactive=False,
                 show_label=False,
