@@ -470,7 +470,20 @@ class Statistics():
     # --- Graphical Analysis ---
     
     # --- Plot Histogram ---
-    def PlotHistogram(self, name_variable, kde, show_data, histo_add_ci, histo_choose_ci, histo_add_pi, histo_choose_pi, add_normal, hat_mu, hat_sigma):
+    def PlotHistogram(
+            self,
+            type,
+            name_variable,
+            kde,
+            show_data,
+            histo_add_ci,
+            histo_choose_ci,
+            histo_add_pi,
+            histo_choose_pi,
+            add_normal,
+            hat_mu,
+            hat_sigma
+        ):
         # Style
         plt.style.use("seaborn-v0_8-whitegrid")
         
@@ -482,11 +495,18 @@ class Statistics():
             fig, ax1 = plt.subplots(1, 1, figsize=(8, 4))
             ax2 = None
 
-        # Histogram and KDE
-        sns.histplot(self.data, kde=kde, stat="density", color="rebeccapurple", alpha=0.5, ax=ax1)
-        ax1.set_ylabel("Density")
-        ax1.set_xlabel(f"{name_variable}")
-        ax1.set_title(f"Distribution of {name_variable}")
+        if type == "Histogram":
+            # Histogram and KDE
+            sns.histplot(self.data, kde=kde, stat="density", color="rebeccapurple", alpha=0.5, ax=ax1)
+            ax1.set_ylabel("Density")
+            ax1.set_xlabel(f"{name_variable}")
+            ax1.set_title(f"Distribution of {name_variable}")
+        elif type == "Empirical Probability Mass Function":
+            values, counts = np.unique(self.data, return_counts=True)
+            probs = counts / counts.sum()
+            ax1.stem(values, probs, basefmt="rebeccapurple", linefmt="rebeccapurple")
+            if kde:
+                sns.kdeplot(self.data, ax=ax1, color="rebeccapurple")
 
         if add_normal:
             y_vect = np.linspace(hat_mu - 3*hat_sigma, hat_mu + 3*hat_sigma, 100)
@@ -1290,7 +1310,7 @@ def histo_add_pi_warning(check):
 
 
 def toggle_graph_stat(graph_stat):
-    if graph_stat == "Histogram":
+    if graph_stat in ["Histogram", "Empirical Probability Mass Function"]:
         return (
             gr.update(visible=True), # histo_add_kde
             gr.update(visible=True), # histo_add_data
@@ -1338,7 +1358,7 @@ def run_graph_stat(
         return gr.update(visible=False), gr.update(visible=True), error_df, gr.update(visible=False), gr.update(visible=False), error_plot
 
     # --- Graphical Analysis ---
-    if graph_stat == "Histogram":
+    if graph_stat in ["Histogram", "Empirical Probability Mass Function"]:
         hat_mu, hat_sigma = None, None
 
         if histo_add_normal:
@@ -1346,6 +1366,7 @@ def run_graph_stat(
             hat_sigma = choose_sigma(histo_hat_sigma, stats, histo_hat_sigma_text)
 
         fig = stats.PlotHistogram(
+            graph_stat,
             column,
             histo_add_kde_check,
             histo_add_data_check,
@@ -1407,6 +1428,7 @@ def build_graphical_tab():
             label="Select Graph",
             choices=[
                 "Histogram",
+                "Empirical Probability Mass Function",
                 "Empirical Cumulative Distribution Function (ECDF)"
             ],
             value="Histogram",
@@ -3774,14 +3796,14 @@ with gr.Blocks(theme=gr.themes.Soft(), css=css) as demo:
         #with gr.TabItem("🅱️ Bayesian Statistics"):
         #    gr.Markdown("# 🚧 Upcoming")
 
-    gr.Markdown("### 🤓 Developed by Himmapan Lab at CMKL University, version 4.2.0, October 2025.")
+    gr.Markdown("### 🤓 Developed by Himmapan Lab at CMKL University, version 4.2.1, October 2025.")
 
     with gr.Row():
         with gr.Column():
             gr.Markdown("### <div style='text-align: center;'>CMKL University</div>")
             gr.Image(
                 "Images/CmklLogo.png",
-                width=33,
+                width=100,
                 interactive=False,
                 show_label=False,
                 show_download_button=False,
