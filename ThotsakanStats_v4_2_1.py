@@ -3617,7 +3617,7 @@ def build_regression_tab():
     with gr.Row():
         formula_check = gr.Checkbox(label="Would you like to write down the regression formula?", value=False, interactive=True)
         formula_text = gr.Textbox(label="Write the formula", placeholder="Y ~ X + np.sin(X) + I((X-5)**2)", interactive=True, visible=False)
-        formula_latex = gr.Textbox(label="Write the formula in LaTeX (Optional)", placeholder="Y = X + \sin(X) + (X-5)^2", interactive=True, visible=False)
+        formula_latex = gr.Textbox(label="Write the formula in LaTeX (Optional)", placeholder=r"Y = X + \sin(X) + (X-5)^2", interactive=True, visible=False)
 
     with gr.Row():
         alpha_input = gr.Textbox(label="Confidence level (e.g. 0.95)", value=0.95, interactive=True)
