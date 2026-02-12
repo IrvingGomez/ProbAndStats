@@ -1,20 +1,26 @@
-# Python
+# --- Python ---
 __pycache__/
 *.py[cod]
 *$py.class
 
-# Virtual environments
+# --- Virtual environments ---
 .venv/
 venv/
 env/
 
-# OS
-.DS_Store
-Thumbs.db
+# --- Jupyter ---
+.ipynb_checkpoints/
 
-# IDE
+# --- IDEs ---
 .vscode/
 .idea/
 
-# Jupyter
-.ipynb_checkpoints/
+# --- OS junk ---
+.DS_Store
+Thumbs.db
+
+# --- Local data/output (optional) ---
+# Uncomment if you generate outputs locally and don't want them tracked
+# outputs/
+# exports/
+# downloads/
