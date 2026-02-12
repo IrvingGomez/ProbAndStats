@@ -86,7 +86,7 @@ controllers/ → Orchestration and validation layer
 ui/ → User interface (Gradio)
 state/ → Shared application state
 datasets/ → Practice datasets
-docs/ → Developer and theory documentation
+docs/ → Developer, users, and theory documentation
 ```
 
 This project follows a strict layered architecture.  
