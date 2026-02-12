@@ -1,155 +1,112 @@
 # Himmapan Lab  
 ## Thotsakan Statistics
 
-Thotsakan Statistics is an interactive statistical software developed under **Himmapan Lab**, an initiative focused on building advanced engineering mathematics tools created **by students, for students**.
+Thotsakan Statistics is an interactive statistical application developed under **Himmapan Lab**, an initiative focused on building advanced engineering mathematics software created **by students, for students**.
 
-This project is designed for teaching, learning, and expanding statistical methods through a modular software architecture that allows undergraduate students to contribute new features as part of academic projects.
+This project is designed to support statistics teaching while serving as a structured platform for undergraduate students to extend and improve the software as part of academic projects.
 
 ---
 
 # Vision
 
 ## Short-Term
-- Support statistics teaching in engineering courses.
-- Provide a structured codebase that students can expand.
-- Serve as a laboratory platform for final-year undergraduate projects.
+- Support statistics courses in engineering programs.
+- Provide a clean, extensible codebase for student contributors.
+- Serve as a laboratory platform for final-year projects.
 
 ## Near-Term
-- Establish an ecosystem of educational mathematical software:
+- Build a broader ecosystem of educational mathematical tools:
   - Statistics
   - Differential Equations
-  - Future advanced engineering mathematics tools
+  - Additional advanced engineering subjects
+
+## Long-Term
+- Evolve into a serious, extensible statistical platform.
 
 ---
 
-# Architecture Overview
+# Quick Start
 
-This project follows a strict layered architecture:
-
-```
-UI → Controllers → Core
-↓
-State
-```
-
-## Layers
-
-### `core/`
-Mathematical and statistical computation layer.
-- No UI logic
-- No formatting
-- Pure statistical algorithms
-
-### `controllers/`
-Boundary and orchestration layer.
-- Validates user input
-- Selects appropriate statistical procedures
-- Formats outputs for the UI
-- Never implements formulas
-
-### `ui/`
-Graphical interface (Gradio).
-- Tabs and layout
-- User controls
-- Calls controller functions
-
-### `state/`
-Shared application state.
-- Loaded dataset
-- Filtered dataset
-- Metadata (numeric/categorical columns)
-- User overrides
-
----
-
-# Repository Structure
-
-```
-app.py → Application entry point
-core/ → Statistical engine
-controllers/ → Orchestration logic
-ui/ → Interface layer
-state/ → Shared application state
-datasets/ → Practice datasets
-docs/
-developers/ → Architecture and extension guides
-theory/ → Statistical lecture notes
-```
-
----
-
-# Datasets
-
-The `datasets/` folder contains:
-
-- `practice/` → datasets available for students to explore in the UI
-- `internal/` → testing or internal-use datasets
-
-These datasets are used for:
-- Descriptive statistics
-- Graphical analysis
-- Hypothesis testing
-- Regression
-- Inference methods
-
----
-
-# Theory Notes
-
-Statistical theory supporting this software is located in:
-
-> docs/theory/ProbAndStatistics.pdf
-
-These notes connect theoretical foundations with implemented methods.
-
----
-
-# Running the Application
-
-1. Install dependencies:
+## 1. Install dependencies
 
 > pip install -r requirements.txt
 
-2. Run:
+## 2. Run the application
 
 > python app.py
 
 ---
 
-# For Students: How to Contribute
+# Project Structure (High-Level)
+
+```
+app.py → Application entry point
+core/ → Statistical engine (pure computation)
+controllers/ → Orchestration and validation layer
+ui/ → User interface (Gradio)
+state/ → Shared application state
+datasets/ → Practice datasets
+docs/ → Developer and theory documentation
+```
+
+This project follows a strict layered architecture.  
+For full architectural details, see:
+
+> docs/developers/architecture.md
+
+---
+
+# Datasets
+
+Practice datasets are located in:
+
+> datasets/practice/
+
+These datasets are used for exploring descriptive statistics, inference, hypothesis testing, and regression within the application.
+
+---
+
+# Theory Notes
+
+Statistical theory supporting this software can be found in:
+
+> docs/theory/ProbAndStatistics.pdf
+
+---
+
+# Contributing (Students & Developers)
 
 Students are encouraged to extend the software by:
 
-- Adding new statistical procedures
-- Improving estimators
-- Implementing new graphical tools
-- Expanding inference methods
+- Adding new statistical methods
+- Implementing alternative estimators
+- Expanding visualizations
 - Improving documentation
 
-Before contributing, read:
+Before adding new features, read:
 
 > docs/developers/architecture.md
 > docs/developers/adding_new_feature.md
 
-These documents describe:
-
+These documents define:
 - Layer responsibilities
-- Estimator selection contracts
-- Feature addition workflow
-- Common architectural mistakes to avoid
+- Dependency rules
+- Feature development workflow
+
+Architectural rules are strictly enforced to maintain long-term stability.
 
 ---
 
-# Himmapan Lab
+# About Himmapan Lab
 
-Himmapan Lab is an academic initiative focused on building advanced mathematical software ecosystems for engineering education.
+Himmapan Lab is an academic initiative focused on building modular mathematical software ecosystems for engineering education.
 
-Future projects will follow the same architectural principles used here, enabling:
+Each project in the lab follows consistent architectural principles to enable:
 
-- Consistent student onboarding
-- Reusable design patterns
+- Clear student onboarding
+- Sustainable expansion
 - Cross-project collaboration
-- Scalable expansion into new domains
+- Long-term scalability
 
 ---
 
