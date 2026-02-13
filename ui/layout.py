@@ -36,10 +36,10 @@ def build_layout():
         # Global header (always visible)
         # ==================================================
         with gr.Row(equal_height=True):
-            gr.Image(LOGOS["himmapan"], height=80, show_label=False, show_download_button=False, show_fullscreen_button=False)
-            gr.Image(LOGOS["thotsakan"], height=80, show_label=False, show_download_button=False, show_fullscreen_button=False)
-            gr.Image(LOGOS["cmkl"], height=80, show_label=False, show_download_button=False, show_fullscreen_button=False)
-            gr.Image(LOGOS["aice"], height=80, show_label=False, show_download_button=False, show_fullscreen_button=False)
+            gr.Image(LOGOS["himmapan"], height=80, show_label=False, show_download_button=False, show_fullscreen_button=False, container=False)
+            gr.Image(LOGOS["thotsakan"], height=80, show_label=False, show_download_button=False, show_fullscreen_button=False, container=False)
+            gr.Image(LOGOS["cmkl"], height=80, show_label=False, show_download_button=False, show_fullscreen_button=False, container=False)
+            gr.Image(LOGOS["aice"], height=80, show_label=False, show_download_button=False, show_fullscreen_button=False, container=False)
 
         gr.Markdown(
             """
