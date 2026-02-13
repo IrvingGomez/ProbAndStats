@@ -81,7 +81,7 @@ so learning feels **hands-on**, **visual**, and **fun**.
 ### Thotsakan Statistics
 **Probability & Statistics Interactive Laboratory**
 
-Explore data, test ideas, and connect statistical theory with computational experimentation..
+Explore data, test ideas, and connect statistical theory with computational experimentation.
                 """.strip()
             )
             if repo_url:
@@ -145,7 +145,7 @@ Start exploring with a dataset from `datasets/practice/`.
                     show_label=False,
                     show_download_button=False,
                     show_fullscreen_button=False,
-                    height=70,
+                    height=80,
                     container=False
                 )
 
@@ -156,7 +156,7 @@ Start exploring with a dataset from `datasets/practice/`.
                     show_label=False,
                     show_download_button=False,
                     show_fullscreen_button=False,
-                    height=70,
+                    height=80,
                     container=False
                 )
 
@@ -167,7 +167,7 @@ Start exploring with a dataset from `datasets/practice/`.
                     show_label=False,
                     show_download_button=False,
                     show_fullscreen_button=False,
-                    height=70,
+                    height=80,
                     container=False
                 )
 
