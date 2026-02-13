@@ -33,6 +33,8 @@ Architectural rules are strictly enforced.
 
 If you are new to the project, read the following in order
 
+## 1. Architecture Overview
+
 ```
 architecture.md
 ```
@@ -97,6 +99,40 @@ Before submitting code:
 - Test features incrementally (Core → Controller → UI).
 
 If you are unsure where code belongs, ask before implementing.
+
+---
+
+# Testing
+
+A minimal test suite exists in:
+
+```
+tests/
+```
+
+To run tests locally:
+
+1. Activate your virtual environment.
+2. Install development dependencies:
+
+```
+pip install -r requirements-dev.txt
+```
+
+3. Run:
+
+```
+pytest -q
+```
+
+Tests must pass before submitting changes.
+
+The goal of testing in this project is to:
+
+- Catch structural regressions
+- Prevent broken imports
+- Protect statistical correctness
+- Encourage disciplined development habits
 
 ---
 

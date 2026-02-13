@@ -140,6 +140,24 @@ Architectural rules are strictly enforced to maintain long-term stability.
 
 ---
 
+# Running Tests (Contributors)
+
+If you are contributing to the project, install development dependencies:
+
+```
+pip install -r requirements-dev.txt
+```
+
+Then run tests from the project root:
+
+```
+pytest -q
+```
+
+All new features should include at least minimal tests.
+
+---
+
 # About Himmapan Lab
 
 Himmapan Lab is an academic initiative focused on building modular mathematical software ecosystems for engineering education.
