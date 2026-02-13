@@ -10,6 +10,7 @@ def load_logo(name: str):
 
 LOGOS = {
     "thotsakan": load_logo("ThotsakanStats.png"),
+    "maiyarap": load_logo("MaiyarapEq.png"),
     "himmapan": load_logo("HimmapanLab.png"),
     "cmkl": load_logo("CmklLogo.png"),
     "aice": load_logo("AiceLogo.png"),

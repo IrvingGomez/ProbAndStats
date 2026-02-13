@@ -4,6 +4,7 @@ from state.app_state import AppState
 from ui.styles import DATA_SELECTOR_CSS
 from ui.assets import LOGOS
 
+from ui.tabs.home_tab import build_home_tab
 from ui.tabs.data_tab import build as build_data_tab
 from ui.tabs.estimation.descriptive_tab import build as build_descriptive_tab
 from ui.tabs.estimation.inference_tab import build as build_inference_tab
@@ -35,10 +36,10 @@ def build_layout():
         # Global header (always visible)
         # ==================================================
         with gr.Row(equal_height=True):
+            gr.Image(LOGOS["himmapan"], height=80, show_label=False, show_download_button=False, show_fullscreen_button=False)
             gr.Image(LOGOS["thotsakan"], height=80, show_label=False, show_download_button=False, show_fullscreen_button=False)
             gr.Image(LOGOS["cmkl"], height=80, show_label=False, show_download_button=False, show_fullscreen_button=False)
             gr.Image(LOGOS["aice"], height=80, show_label=False, show_download_button=False, show_fullscreen_button=False)
-            #gr.Image(LOGOS["himmapan"], height=80, show_label=False, show_download_button=False, show_fullscreen_button=False)
 
         gr.Markdown(
             """
@@ -56,8 +57,11 @@ def build_layout():
             # Home
             # -------------------------
             with gr.Tab("🏠 Home"):
-                gr.Markdown("What is Himmapan lab. Its goal, its vision, products.")
-                gr.Markdown("What is Thotsakan Statistics. Links to repository.")
+                build_home_tab(
+                    logos=LOGOS,
+                    repo_url="https://github.com/IrvingGomez/ThotsakanStatistics",
+                    maiyarap_repo_url=None,  # or set when available
+                )
 
             # -------------------------
             # Data
@@ -104,7 +108,5 @@ def build_layout():
             # -------------------------
             with gr.Tab("📈 Linear Regression"):
                 build_linear_regression_tab(state)
-
-        gr.Markdown("### 🤓 Developed by Himmapan Lab at CMKL University, version 5.0.0, February 2026.")
 
     return demo
