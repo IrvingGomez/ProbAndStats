@@ -51,7 +51,7 @@ so learning feels **hands-on**, **visual**, and **fun**.
     with gr.Column():
         gr.Markdown(
             """
-## 🚀 Our Vision
+## Our Vision
 
 - **Teach with interaction:** turn abstract concepts into experiments you can run.
 - **Be transparent:** methods are implemented clearly so students can learn from the code.
@@ -62,7 +62,7 @@ so learning feels **hands-on**, **visual**, and **fun**.
     gr.Markdown("---")
 
     # ---------- PRODUCTS ----------
-    gr.Markdown("## 🧩 Products")
+    gr.Markdown("## Products")
 
     with gr.Row(equal_height=True):
         # Thotsakan Statistics Card
@@ -85,7 +85,7 @@ Explore data, test ideas, and connect statistical theory with computational expe
                 """.strip()
             )
             if repo_url:
-                gr.Markdown(f"🔗 Repository: {repo_url}")
+                gr.Markdown(f"Repository: {repo_url}")
             gr.HTML("</div>")
 
         # Maiyarap Equations Card
@@ -110,7 +110,7 @@ Explore dynamic systems, visualize solutions, and connect mathematical models wi
                 """.strip()
             )
             if maiyarap_repo_url:
-                gr.Markdown(f"🔗 Repository: {maiyarap_repo_url}")
+                gr.Markdown(f"Repository: {maiyarap_repo_url}")
             gr.HTML("</div>")
 
     gr.Markdown("---")
@@ -119,7 +119,7 @@ Explore dynamic systems, visualize solutions, and connect mathematical models wi
     with gr.Column():
         gr.Markdown(
             """
-## 📌 About this application
+## About this application
 
 Use the tabs at the top to begin:
 
