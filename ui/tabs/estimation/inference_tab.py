@@ -60,7 +60,7 @@ def build(state):
             gr.update(choices=deviation_choices),
         )
 
-    gr.Markdown("## 💭 Statistical Inference")
+    gr.Markdown("## Statistical Inference")
 
     with gr.Row():
         refresh_button = gr.Button("🔄 Refresh Numeric Columns")

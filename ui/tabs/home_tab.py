@@ -35,7 +35,7 @@ def build_home_tab(
     with gr.Column():
         gr.Markdown(
             """
-# 👋 Welcome
+# Welcome
 
 ### **Himmapan Lab**
 *Interactive mathematical tools built by students, for students.*

@@ -6,7 +6,7 @@ from controllers.utils.downloads import dataframe_to_csv
 
 
 def build(state):
-    gr.Markdown("## 🧮 Descriptive Statistics")
+    gr.Markdown("## Descriptive Statistics")
 
     # ---------------------------
     # Controls

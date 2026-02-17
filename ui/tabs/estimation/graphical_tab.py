@@ -56,7 +56,7 @@ def build(state):
             gr.update(choices=deviation_choices),
         )
 
-    gr.Markdown("## 📊 Graphical Analysis")
+    gr.Markdown("## Graphical Analysis")
 
     # -----------------------------------------------------------
     # Top controls: column + graph type

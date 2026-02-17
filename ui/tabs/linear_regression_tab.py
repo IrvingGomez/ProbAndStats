@@ -16,7 +16,7 @@ def build(state: AppState) -> None:
     while delegating statistics to the `stats.linear_regression` module and
     wiring / validation to `regression_controller`.
     """
-    gr.Markdown("## 📈 Linear Regression")
+    gr.Markdown("## Linear Regression")
 
     # Use the numeric columns discovered by the Data tab
     numeric_cols = state.numeric_cols or []

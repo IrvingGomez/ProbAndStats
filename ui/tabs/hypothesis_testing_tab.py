@@ -6,7 +6,7 @@ from controllers.utils.downloads import dataframe_to_csv, figure_to_png
 
 
 def build(state):
-    gr.Markdown("## 🧪 Hypothesis Testing")
+    gr.Markdown("## Hypothesis Testing")
 
     with gr.Row(elem_id="row_centered"):
         refresh_columns_button = gr.Button("🔄 Refresh Numeric Columns")

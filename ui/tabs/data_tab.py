@@ -4,7 +4,7 @@ from controllers.data_controller import wire_callbacks
 
 
 def build(state):
-    gr.Markdown("## 📁 Data Management")
+    gr.Markdown("## Data Management")
 
     # ==================================================
     # File upload + status + preview toggles
