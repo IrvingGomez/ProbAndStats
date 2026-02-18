@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this software for teaching or research, please cite it."
+title: "Thotsakan Statistics"
+type: software
+authors:
+  - family-names: "Gómez Méndez"
+    given-names: "Irving"
+repository-code: "https://github.com/IrvingGomez/ThotsakanStatistics"
+license: "MIT"
+version: "0.1.1"
+date-released: "2026-02-18"
+keywords:
+  - statistics
+  - engineering education
+  - inference
+  - estimation
+  - gradio
+  - himmapan lab
