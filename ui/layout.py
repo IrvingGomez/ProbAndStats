@@ -1,8 +1,10 @@
 import gradio as gr
 
 from state.app_state import AppState
+
 from ui.styles import DATA_SELECTOR_CSS
 from ui.assets import LOGOS
+from ui.version import APP_NAME, APP_TAGLINE, APP_VERSION
 
 from ui.tabs.home_tab import build_home_tab
 from ui.tabs.data_tab import build as build_data_tab
@@ -42,10 +44,10 @@ def build_layout():
             gr.Image(LOGOS["aice"], height=80, show_label=False, show_download_button=False, show_fullscreen_button=False, container=False)
 
         gr.Markdown(
-            """
-            # Thotsakan Statistics  
-            *Probability and Statistics Interactive Laboratory*
-            """
+            f"""
+        # {APP_NAME} · v{APP_VERSION}  
+        *{APP_TAGLINE}*
+        """.strip()
         )
 
         # ==================================================

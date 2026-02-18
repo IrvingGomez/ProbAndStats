@@ -175,8 +175,6 @@ Start exploring with a dataset from `datasets/practice/`.
         """
 <p style="opacity:0.75; margin-top: 6px;">
 Built under <b>Himmapan Lab</b> for engineering education.
-
-Version 5.0.0, February 2026.
 </p>
         """.strip()
     )
