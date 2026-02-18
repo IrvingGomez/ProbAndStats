@@ -1,53 +1,91 @@
 # Himmapan Lab  
-## Thotsakan Statistics
+# Thotsakan Statistics
 
-Thotsakan Statistics is an interactive statistical application developed under **Himmapan Lab**, an initiative focused on building advanced engineering mathematics software created **by students, for students**.
-
-This project is designed to support statistics teaching while serving as a structured platform for undergraduate students to extend and improve the software as part of academic projects.
-
----
-
-# Vision
-
-## Short-Term
-- Support statistics courses in engineering programs.
-- Provide a clean, extensible codebase for student contributors.
-- Serve as a laboratory platform for final-year projects.
-
-## Near-Term
-- Build a broader ecosystem of educational mathematical tools:
-  - Statistics
-  - Differential Equations
-  - Additional advanced engineering subjects
-
-## Long-Term
-- Evolve into a serious, extensible statistical platform.
+**Current stable version:** v0.1.1  
+See full release history in [CHANGELOG.md](CHANGELOG.md).
 
 ---
 
-# Environment Setup (Recommended)
+## Overview
 
-It is strongly recommended to use a **virtual environment** to avoid package conflicts.
+**Thotsakan Statistics** is an interactive statistical application developed under **Himmapan Lab**, an academic initiative focused on building modular mathematical software ecosystems for engineering education.
 
-## 1. Create a virtual environment (once)
+The project serves two purposes:
 
-From the project root:
+1. **Pedagogical Platform** – Supporting statistics teaching in engineering programs.
+2. **Structured Development Laboratory** – Providing a disciplined, extensible codebase where undergraduate students can contribute meaningful statistical functionality.
 
-### Windows (Git Bash / WSL)
+The system emphasizes:
+
+- Architectural clarity  
+- Strict separation of concerns  
+- Extensibility  
+- Long-term maintainability  
+
+---
+
+## Vision
+
+### Short-Term
+- Support undergraduate statistics courses.
+- Provide a stable, well-structured contribution platform for students.
+- Enable final-year project extensions.
+
+### Medium-Term
+- Expand statistical functionality (e.g., completion of the Probability module).
+- Improve statistical validation testing and coverage.
+- Strengthen input validation and controller robustness.
+
+### Long-Term
+- Evolve into a serious, extensible statistical platform within a broader ecosystem of engineering mathematics tools.
+
+---
+
+## Core Architectural Principles
+
+The project follows a strict layered architecture:
 
 ```
-python -m venv .venv
-source .venv/Scripts/activate
+app.py → Application entry point
+core/ → Pure statistical computation layer
+controllers/ → Validation, orchestration, estimator selection
+ui/ → Gradio-based presentation layer
+state/ → Shared application state
+datasets/ → Teaching and practice datasets
+docs/ → User, developer, and theory documentation
 ```
 
-### Windows (PowerShell)
+**Dependency rule:**  
+UI → Controllers → Core  
+(No reverse dependencies allowed.)
+
+Full architectural documentation is available in:
+
+[Developer Documentation](docs/developers/README.md)
+
+---
+
+## Installation & Environment Setup
+
+It is strongly recommended to use a virtual environment.
+
+### 1. Create a Virtual Environment (once)
+
+#### Windows (PowerShell)
 
 ```
 python -m venv .venv
 ..venv\Scripts\activate
 ```
 
-### macOS / Linux
+#### Windows (Git Bash / WSL)
+
+```
+python -m venv .venv
+source .venv/Scripts/activate
+```
+
+#### macOS / Linux
 
 ```
 python -m venv .venv
@@ -60,118 +98,112 @@ After activation, your terminal should display:
 (.venv)
 ```
 
-## 2. Install dependencies (once)
+---
+
+### 2. Install Dependencies
 
 ```
 pip install -r requirements.txt
 ```
 
-## 3. Run the application
+---
+
+### 3. Run the Application
 
 ```
 python app.py
 ```
 
-You only need to **create and install once**.  
-You must **activate the environment each time you open a new terminal**.
+You only need to create and install once.  
+You must activate the environment each time you open a new terminal.
 
 ---
 
-# Project Structure (High-Level)
-
-```
-app.py → Application entry point
-core/ → Statistical engine (pure computation)
-controllers/ → Orchestration and validation layer
-ui/ → User interface (Gradio)
-state/ → Shared application state
-datasets/ → Practice datasets
-docs/ → Developer, users, and theory documentation
-```
-
-This project follows a strict layered architecture.  
-For full architectural details, see:
-
-```
-docs/developers/architecture.md
-```
-
----
-
-# Datasets
+## Datasets
 
 Practice datasets are located in:
 
-```
-datasets/practice/
-```
+[Practice Datasets](datasets/practice/)
 
-These datasets are used for exploring descriptive statistics, inference, hypothesis testing, and regression within the application.
+They are intended for:
 
----
-
-# Theory Notes
-
-Statistical theory supporting this software can be found in:
-
-```
-docs/theory/ProbAndStatistics.pdf
-```
+- Descriptive statistics  
+- Estimation and inference  
+- Hypothesis testing  
+- Linear regression exercises  
 
 ---
 
-# Contributing (Students & Developers)
+## Theory Notes
 
-Students are encouraged to extend the software by:
+Supporting statistical theory material:
 
-- Adding new statistical methods
-- Implementing alternative estimators
-- Expanding visualizations
-- Improving documentation
-
-Before adding new features, read:
-
-```
-docs/developers/architecture.md
-docs/developers/adding_new_feature.md
-```
-
-Architectural rules are strictly enforced to maintain long-term stability.
+[Probability and Statistics](docs/theory/ProbAndStatistics.pdf)
 
 ---
 
-# Running Tests (Contributors)
+## Contributing
 
-If you are contributing to the project, install development dependencies:
+Students and contributors are encouraged to extend the software responsibly.
+
+Possible contribution areas:
+
+- New statistical estimators  
+- Alternative inference methods  
+- Visualization improvements  
+- Input validation enhancements  
+- Additional statistical modules  
+- Test coverage expansion  
+
+Before contributing, read:
+
+- [Architecture Guide](docs/developers/architecture.md)  
+- [Adding a New Feature](docs/developers/adding_new_feature.md)  
+- [Coding Rules](docs/developers/coding_rules.md)  
+
+Architectural discipline is mandatory to preserve long-term stability.
+
+---
+
+## Running Tests
+
+For contributors:
 
 ```
 pip install -r requirements-dev.txt
-```
-
-Then run tests from the project root:
-
-```
 pytest -q
 ```
 
-All new features should include at least minimal tests.
+All new features should include at least minimal test coverage.
 
 ---
 
-# About Himmapan Lab
+## Releases
+
+This project follows **Semantic Versioning (MAJOR.MINOR.PATCH)**.
+
+- **v0.1.0** – First structured public release  
+- **v0.1.1** – Metadata patch (LICENSE and CITATION added)
+
+For full details, see:
+
+- [CHANGELOG.md](CHANGELOG.md)
+
+---
+
+## License
+
+This project is licensed under the terms specified in the [LICENSE](LICENSE) file.
+
+---
+
+## About Himmapan Lab
 
 Himmapan Lab is an academic initiative focused on building modular mathematical software ecosystems for engineering education.
 
 Each project in the lab follows consistent architectural principles to enable:
 
-- Clear student onboarding
-- Sustainable expansion
-- Cross-project collaboration
-- Long-term scalability
-
----
-
-# License
-
-(To be added)
-
+- Clear student onboarding  
+- Sustainable expansion  
+- Cross-project collaboration  
+- Long-term scalability  
