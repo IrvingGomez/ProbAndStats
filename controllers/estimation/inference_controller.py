@@ -17,6 +17,7 @@ from core.estimation.inference.pi import (
 )
 
 from core.estimation.inference.confidence_regions import confidence_regions
+from core.estimation.inference.estimator_options import available_estimators
 
 
 # ---------------------------------------------------------------------
@@ -36,6 +37,15 @@ def validate_deviation_estimator(*, sigma_estimator: str, n: int):
             "Use another estimator or bootstrap."
         )
 
+
+
+
+def get_available_estimators(data):
+    mean_choices, deviation_choices = available_estimators(data)
+    return {
+        "mean_estimators": mean_choices,
+        "deviation_estimators": deviation_choices,
+    }
 
 # ---------------------------------------------------------------------
 # Confidence Intervals
@@ -273,7 +283,7 @@ def run_intervals(
     bootstrap_deviation,
     bootstrap_samples,
 ):
-    ci_table, mean_ci, sigma_ci = run_confidence_intervals(
+    ci_table, mean_ci, sigma_ci, _ = run_confidence_intervals(
         data=data,
         alpha=alpha,
         mean_estimator=mean_estimator,

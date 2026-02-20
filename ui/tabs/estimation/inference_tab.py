@@ -5,30 +5,13 @@ from controllers.estimation.inference_controller import (
     run_confidence_intervals,
     run_prediction_intervals,
     run_confidence_regions,
+    get_available_estimators,
 )
 
 from controllers.utils.downloads import dataframe_to_csv, figure_to_png
 
 
 def build(state):
-
-    ALL_MEAN_ESTIMATORS = [
-        "Sample Mean",
-        "Geometric Mean",
-        "Harmonic Mean",
-        "Interquartile Mean",
-        "Trimmed Mean",
-        "Winsorized Mean",
-        "Weighted Mean",
-    ]
-
-    ALL_DEVIATION_ESTIMATORS = [
-        "Deviation (1 ddof)",
-        "Range (bias corrected)",
-        "IQR (bias corrected)",
-        "MAD (bias corrected)",
-        "AAD (bias corrected)",
-    ]
 
     # ============================================================
     # Dynamic dropdown filtering
@@ -40,24 +23,11 @@ def build(state):
             return gr.update(), gr.update()
 
         data = df[column].dropna()
-
-        mean_choices = ALL_MEAN_ESTIMATORS.copy()
-        if (data <= 0).any():
-            mean_choices = [
-                m for m in mean_choices
-                if m not in ("Geometric Mean", "Harmonic Mean")
-            ]
-
-        deviation_choices = ALL_DEVIATION_ESTIMATORS.copy()
-        if len(data) > 25:
-            deviation_choices = [
-                d for d in deviation_choices
-                if d != "Range (bias corrected)"
-            ]
+        estimators = get_available_estimators(data)
 
         return (
-            gr.update(choices=mean_choices),
-            gr.update(choices=deviation_choices),
+            gr.update(choices=estimators["mean_estimators"]),
+            gr.update(choices=estimators["deviation_estimators"]),
         )
 
     gr.Markdown("## Statistical Inference")
@@ -127,7 +97,7 @@ def build(state):
         with gr.Row():
             mean_select = gr.Dropdown(
                 label="Mean Estimator",
-                choices=ALL_MEAN_ESTIMATORS,
+                choices=get_available_estimators([])["mean_estimators"],
                 value="Sample Mean",
             )
 
@@ -159,7 +129,7 @@ def build(state):
 
             sigma_select = gr.Dropdown(
                 label="Deviation Estimator",
-                choices=ALL_DEVIATION_ESTIMATORS,
+                choices=get_available_estimators([])["deviation_estimators"],
                 value="Deviation (1 ddof)",
             )
 
