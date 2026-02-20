@@ -117,6 +117,22 @@ def estimate_mean(
     raise ValueError(f"Unknown mean estimator: {estimator}")
 
 
+# -----------------
+# Median estimators
+# -----------------
+
+def estimate_median(
+    data,
+    estimator,
+):
+    data = np.asarray(data)
+
+    if estimator == "Sample Median":
+        return np.median(data)
+
+    raise ValueError(f"Unknown median estimator: {estimator}")
+
+
 # --------------------
 # Deviation estimators
 # --------------------

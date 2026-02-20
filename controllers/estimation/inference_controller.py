@@ -103,12 +103,14 @@ def run_confidence_intervals(
         median_ci = ci_median_bootstrap(
             data=data,
             alpha=alpha,
+            estimator=median_estimator,
             B=bootstrap_samples,
         )
     else:
         median_ci = ci_median_analytic(
             data=data,
             alpha=alpha,
+            estimator=median_estimator,
             sigma_estimator=sigma_estimator,
         )
 
@@ -177,6 +179,7 @@ def run_prediction_intervals(
     median_pi = pi_median(
         data=data,
         alpha=alpha,
+        estimator=median_estimator,
         sigma_estimator=sigma_estimator,
     )
     rows.append(["Prediction", "Median", *median_pi])

@@ -123,7 +123,7 @@ def build(state):
 
             median_select = gr.Dropdown(
                 label="Median Estimator",
-                choices=["Sample Median"],
+                choices=ALL_MEDIAN_ESTIMATORS,
                 value="Sample Median",
             )
 
