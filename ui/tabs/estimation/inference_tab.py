@@ -22,6 +22,10 @@ def build(state):
         "Weighted Mean",
     ]
 
+    ALL_MEDIAN_ESTIMATORS = [
+        "Sample Median",
+    ]
+
     ALL_DEVIATION_ESTIMATORS = [
         "Deviation (1 ddof)",
         "Range (bias corrected)",
@@ -153,7 +157,7 @@ def build(state):
 
             median_select = gr.Dropdown(
                 label="Median Estimator",
-                choices=["Sample Median"],
+                choices=ALL_MEDIAN_ESTIMATORS,
                 value="Sample Median",
             )
 

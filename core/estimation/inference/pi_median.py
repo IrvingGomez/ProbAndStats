@@ -3,26 +3,27 @@
 import numpy as np
 from scipy.stats import norm
 
-from .estimators import estimate_sigma
+from .estimators import estimate_median, estimate_sigma
 
 
 def pi_median(
     *,
     data,
     alpha,
+    estimator,
     sigma_estimator,
 ):
     """
-    Asymptotic prediction interval based on the sample median.
+    Asymptotic prediction interval based on the chosen median estimator.
 
     scale = sqrt(σ² + πσ² / (2n)) = σ * sqrt(1 + π/(2n))
 
-    σ is computed with the user-chosen deviation estimator.
+    Median and σ are computed with user-chosen estimators.
     """
     data = np.asarray(data)
     n = len(data)
 
-    median_hat = np.median(data)
+    median_hat = estimate_median(data, estimator)
 
     sigma_hat = estimate_sigma(
         data=data,

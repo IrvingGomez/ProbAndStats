@@ -5,7 +5,11 @@ from typing import Optional, Tuple
 import numpy as np
 import pandas as pd
 
-from core.estimation.inference.estimators import estimate_mean, estimate_sigma
+from core.estimation.inference.estimators import (
+    estimate_mean,
+    estimate_median,
+    estimate_sigma,
+)
 from core.estimation.inference.ci import (
     ci_mean_analytic,
     ci_mean_bootstrap,
@@ -149,6 +153,7 @@ def run_graphical_analysis(
             ecdf_conf_level=ecdf_conf_level,
             ecdf_add_normal=ecdf_add_normal,
             mean_estimator=mean_estimator,
+            median_estimator=median_estimator,
             sigma_estimator=sigma_estimator,
             trim_param=trim_param,
             winsor_limits=winsor_limits,
@@ -213,7 +218,7 @@ def _run_hist_or_pmf(
                     weights=weights,
                 )
             else:
-                hat_mu = float(np.median(data))
+                hat_mu = estimate_median(data, median_estimator)
 
             hat_sigma = estimate_sigma(
                 data=data,
@@ -252,12 +257,14 @@ def _run_hist_or_pmf(
                 ci_median_interval = ci_median_bootstrap(
                     data=data,
                     alpha=alpha,
+                    estimator=median_estimator,
                     B=bootstrap_samples,
                 )
             else:
                 ci_median_interval = ci_median_analytic(
                     data=data,
                     alpha=alpha,
+                    estimator=median_estimator,
                     sigma_estimator=sigma_estimator,
                 )
 
@@ -282,10 +289,10 @@ def _run_hist_or_pmf(
                     weights=weights,
                 )
             elif pi_choice == "Median":
-                # New API: pi_median only needs data, alpha and sigma_estimator
                 pi_interval = pi_median(
                     data=data,
                     alpha=alpha,
+                    estimator=median_estimator,
                     sigma_estimator=sigma_estimator,
                 )
             elif pi_choice == "IQR":
@@ -334,6 +341,7 @@ def _run_ecdf(
     ecdf_conf_level: float,
     ecdf_add_normal: bool,
     mean_estimator: str,
+    median_estimator: str,
     sigma_estimator: str,
     trim_param,
     winsor_limits,
@@ -364,7 +372,7 @@ def _run_ecdf(
                 weights=weights,
             )
         else:
-            hat_mu = float(np.median(data))
+            hat_mu = estimate_median(data, median_estimator)
 
         hat_sigma = estimate_sigma(
             data=data,
