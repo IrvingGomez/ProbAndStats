@@ -11,6 +11,11 @@ from controllers.estimation.inference_controller import (
 from controllers.utils.downloads import dataframe_to_csv, figure_to_png
 
 
+ALL_MEDIAN_ESTIMATORS = [
+    "Sample Median",
+]
+
+
 def build(state):
 
     # ============================================================
