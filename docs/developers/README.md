@@ -33,37 +33,35 @@ Architectural rules are strictly enforced.
 
 If you are new to the project, read the following in order
 
-## 1. Architecture Overview
+## 1. Constitution (must read)
 
-```
-architecture.md
-```
+[Constitution (Structural & Mathematical Rules)](../project/constitution.md)
 
-This document defines:
-
-- The layered architecture
-- Dependency rules
-- Responsibilities of each layer
-- Explicit anti-patterns
-
-It is the authoritative reference for architectural decisions.
+Defines the non-negotiable structural and mathematical rules of the project.
 
 ---
 
-## 2. Adding a New Feature
+## 2. Architecture Overview
 
-```
-adding_new_feature.md
-```
+[Architecture Guide](../project/architecture.md)
 
-This document explains:
+Explains the layered architecture, dependency rules, and responsibilities of each layer.
 
-- How to implement a feature correctly
-- The correct development order (Core → Controller → UI)
-- Where new code belongs
-- Common mistakes to avoid
+---
 
-Read this before writing any new code.
+## 3. Governance & Lifecycle
+
+Describes versioning policy, tests, releases, and repository governance.
+
+[Governance & Lifecycle Policy](../project/governance.md)
+
+---
+
+## 4. Feature Workflow
+
+[Feature Workflow](docs/developers/feature_workflow.md)
+
+Explains how to add new features correctly (Core → Controller → UI), and where new code belongs.
 
 ---
 
@@ -71,13 +69,7 @@ Read this before writing any new code.
 
 Dependencies always flow downward:
 
-```
-UI
-↓
-Controllers
-↓
-Core
-```
+    UI  →  Controllers  →  Core
 
 - Core must never depend on Controllers, UI, or State.
 - Controllers may depend on Core.
@@ -106,9 +98,7 @@ If you are unsure where code belongs, ask before implementing.
 
 A minimal test suite exists in:
 
-```
-tests/
-```
+`tests/`
 
 To run tests locally:
 

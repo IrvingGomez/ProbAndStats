@@ -1,7 +1,7 @@
 # Himmapan Lab  
 # Thotsakan Statistics
 
-**Current stable version:** v0.1.1  
+**Current stable version:** v0.1.2  
 See full release history in [CHANGELOG.md](CHANGELOG.md).
 
 ---
@@ -59,9 +59,12 @@ docs/ → User, developer, and theory documentation
 UI → Controllers → Core  
 (No reverse dependencies allowed.)
 
-Full architectural documentation is available in:
+For full details, see:
 
-[Developer Documentation](docs/developers/README.md)
+- [Architecture Overview](docs/project/architecture.md)
+- [Constitution (Structural & Mathematical Rules)](docs/project/constitution.md)
+- [Governance & Lifecycle Policy](docs/project/governance.md)
+- [Developer Documentation](docs/developers/README.md)
 
 ---
 
@@ -138,7 +141,7 @@ They are intended for:
 
 Supporting statistical theory material:
 
-[Probability and Statistics](docs/theory/ProbAndStatistics.pdf)
+[Probability and Statistics](docs/theory/prob_and_stats.pdf)
 
 ---
 
@@ -157,9 +160,9 @@ Possible contribution areas:
 
 Before contributing, read:
 
-- [Architecture Guide](docs/developers/architecture.md)  
-- [Adding a New Feature](docs/developers/adding_new_feature.md)  
-- [Coding Rules](docs/developers/coding_rules.md)  
+- [Architecture Guide](docs/project/architecture.md)  
+- [Feature Workflow](docs/developers/feature_workflow.md)  
+- [Coding Rules](docs/developers/coding_rules.md) 
 
 Architectural discipline is mandatory to preserve long-term stability.
 

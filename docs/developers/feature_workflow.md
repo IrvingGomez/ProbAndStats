@@ -14,7 +14,7 @@ It is written primarily for:
 
 The goal is to help you add features **without breaking architectural guarantees** or introducing technical debt.
 
-This guide assumes you have already read `architecture.md`.
+This guide assumes you have already read [Architecture Guide](../project/architecture.md).
 
 ---
 
@@ -39,9 +39,7 @@ Always begin with the **statistical logic**, then work upward.
 
 Correct order:
 
-```
-Core → Controller → UI
-```
+    Core → Controller → UI
 
 
 If you start from the UI, you will almost certainly put logic in the wrong place.

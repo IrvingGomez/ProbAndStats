@@ -26,9 +26,7 @@ The software is designed to connect statistical theory with practical experiment
 
 If this is your first time running the project locally, follow:
 
-```
-getting_started.md
-```
+[Getting Started](getting_started.md)
 
 That guide explains:
 
@@ -43,9 +41,7 @@ That guide explains:
 
 Practice datasets are located in:
 
-```
-datasets/practice/
-```
+[Practice Datasets](../../datasets/practice/)
 
 These datasets are intended for experimentation and coursework.
 
@@ -62,9 +58,7 @@ You are encouraged to:
 
 Statistical theory supporting the methods implemented in this application can be found in:
 
-```
-docs/theory/ProbAndStatistics.pdf
-```
+[Probability and Statistics](../theory/prob_and_stats.pdf)
 
 The goal of this project is not only to compute results, but to understand the statistical reasoning behind them.
 
@@ -74,10 +68,8 @@ The goal of this project is not only to compute results, but to understand the s
 
 If you are interested in modifying or extending the software, see:
 
-```
-docs/developers/architecture.md
-docs/developers/adding_new_feature.md
-```
+- [Architecture Guide](../project/architecture.md)  
+- [Feature Workflow](../developers/feature_workflow.md)
 
 ---
 

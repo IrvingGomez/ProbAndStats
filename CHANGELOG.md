@@ -17,6 +17,15 @@ This project follows Semantic Versioning (MAJOR.MINOR.PATCH).
 
 ---
 
+## [0.1.2] – 2026-02-22
+
+### Changed
+- Reorganized documentation structure
+- Renamed docs/architecture/ to docs/project/
+- Recreated architecture.md as structural overview
+- Consolidated architectural authority in constitution.md
+- Fixed internal documentation links
+
 ## [0.1.1] - 2026-02-18
 
 ### Added

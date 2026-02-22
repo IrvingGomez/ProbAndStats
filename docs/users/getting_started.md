@@ -155,10 +155,8 @@ Once the application runs successfully, you can:
 
 If you are interested in extending the software, read:
 
-```
-docs/developers/architecture.md
-docs/developers/adding_new_feature.md
-```
+- [Architecture Guide](../project/architecture.md)  
+- [Feature Workflow](../developers/feature_workflow.md)
 
 ---
 
