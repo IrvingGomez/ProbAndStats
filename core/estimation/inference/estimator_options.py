@@ -21,6 +21,10 @@ ALL_DEVIATION_ESTIMATORS = [
     "AAD (bias corrected)",
 ]
 
+ALL_MEDIAN_ESTIMATORS = [
+    "Sample Median",
+]
+
 
 def available_estimators(data):
     arr = np.asarray(data, dtype=float)
@@ -39,4 +43,3 @@ def available_estimators(data):
         ]
 
     return mean_choices, deviation_choices
-

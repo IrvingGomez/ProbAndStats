@@ -9,11 +9,7 @@ from controllers.estimation.inference_controller import (
 )
 
 from controllers.utils.downloads import dataframe_to_csv, figure_to_png
-
-
-ALL_MEDIAN_ESTIMATORS = [
-    "Sample Median",
-]
+from core.estimation.inference.estimator_options import ALL_MEDIAN_ESTIMATORS
 
 
 def build(state):
